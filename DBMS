@@ -1,0 +1,62 @@
+CREATE TABLE CUSTOMERS(
+    CUSTOMERID NUMBER(3) primary key,
+    NAME VARCHAR(25),
+    ADDRESS VARCHAR(50) 
+    );
+    
+create table ORDERS (
+  ORDERID number(5),
+  ORDERDATE Date,
+  CUSTOMERID NUMBER(3),
+  primary key (ORDERID),
+  foreign key (CUSTOMERID) references CUSTOMERS(CUSTOMERID)
+);
+
+create table PRODUCTS (
+  PRODUCTID number(2),
+  DESCRIPTION VARCHAR2(28),
+  FINISH VARCHAR2(10),
+  PRICE FLOAT check (0 <= PRICE AND PRICE <= 899.9)NULL,
+  PRIMARY KEY (PRODUCTID)
+);
+
+create table REQUESTS ( 
+  ORDERID number(5),
+  PRODUCTID number(2),
+  QUANTITY integer check (0 < QUANTITY AND QUANTITY  <= 50),
+  FOREIGN KEY(ORDERID) REFERENCES ORDERS (ORDERID),
+  FOREIGN KEY (PRODUCTID) REFERENCES PRODUCTS(PRODUCTID)
+);
+
+insert into CUSTOMERS VALUES ('2','CASUAL FURNITURE','PLANO, TX');
+insert into CUSTOMERS VALUES ('6','MOUNTAIN GALLERY','BOULDER, CO');
+
+insert into ORDERS VALUES ('1006','24-MAR-10','2');
+insert into ORDERS VALUES ('1007','25-MAR-10','6');
+insert into ORDERS VALUES ('1008','25-MAR-10','6');
+insert into ORDERS VALUES ('1009','26-MAR-10','2');
+
+insert into PRODUCTS VALUES ('10','WRITING DESK','OAK','425');
+insert into PRODUCTS VALUES ('30','DINING TABLE','ASH','');
+insert into PRODUCTS VALUES ('40','ENTERTAINMENT CENTER','MAPLE','650');
+insert into PRODUCTS VALUES ('70','CHILDRENS DRESSER','PINE','300');
+
+insert into REQUESTS VALUES ('1006','10','4');
+insert into REQUESTS VALUES ('1006','30','2');
+insert into REQUESTS VALUES ('1006','40','1');
+insert into REQUESTS VALUES ('1007','40','3');
+insert into REQUESTS VALUES ('1007','70','2');
+insert into REQUESTS VALUES ('1008','70','1');
+insert into REQUESTS VALUES ('1009','10','2');
+insert into REQUESTS VALUES ('1009','40','1');
+
+select * from CUSTOMERS;
+Select * from ORDERS;
+select * from REQUESTS;
+select * from PRODUCTS;
+
+DROP TABLE REQUESTS;
+DROP TABLE PRODUCTS;
+DROP TABLE ORDERS;
+DROP TABLE CUSTOMERS;
+)
